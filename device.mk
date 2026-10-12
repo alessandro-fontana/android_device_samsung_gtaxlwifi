@@ -158,6 +158,19 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/gps/gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gps.xml \
     $(DEVICE_PATH)/rootdir/etc/init/gps.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gps.rc
 
+# Sensors: the accelerometer has no IRQ, so the IIO HAL must poll
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.iio.accel.quirks=no-trig \
+    ro.vendor.iio.accel.name=LIS2HH12 \
+    ro.vendor.iio.accel.vendor=STMicroelectronics
+
+# Light sensor: the CM3323 has no illuminance channel; the HAL reports the raw
+# clear count, and the auto-brightness curve in the overlay is in counts.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.iio.intensity.quirks=no-trig \
+    ro.vendor.iio.intensity.name=CM3323 \
+    ro.vendor.iio.intensity.vendor=Capella_Microsystems
+
 # Bluetooth: the QCA9377 answers APCF READ_EXTENDED_FEATURES with the bare
 # OCF and the stack aborts. Basic APCF works.
 PRODUCT_VENDOR_PROPERTIES += \

@@ -1,0 +1,13 @@
+# IIO sensors (LIS2HH12 accelerometer, CM3323 light) for hardware/intel/sensors-iio
+
+# The HAL lists /sys/bus/iio/devices and follows the links to /sys/devices
+allow hal_sensors_default sysfs:dir r_dir_perms;
+allow hal_sensors_default sysfs:lnk_file read;
+
+# The HAL writes sampling_frequency, calibbias and the buffer attributes
+type sysfs_iio, fs_type, sysfs_type;
+allow hal_sensors_default sysfs_iio:dir r_dir_perms;
+allow hal_sensors_default sysfs_iio:file rw_file_perms;
+
+# The HAL keeps /dev/iio:deviceN open to keep polled sensors powered
+allow hal_sensors_default iio_device:chr_file rw_file_perms;
