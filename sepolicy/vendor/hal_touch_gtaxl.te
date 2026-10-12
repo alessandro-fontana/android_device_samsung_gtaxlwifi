@@ -1,0 +1,5 @@
+# vendor.lineage.touch HAL (IKeySwapper, IKeyDisabler); the domain is from
+# device/lineage/sepolicy
+
+allow hal_lineage_touch_default sysfs_touch_gtaxl:dir search;
+allow hal_lineage_touch_default sysfs_touch_gtaxl:file rw_file_perms;

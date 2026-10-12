@@ -1,0 +1,9 @@
+#
+# SPDX-FileCopyrightText: 2026 The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+service vendor.touch-gtaxlwifi /vendor/bin/hw/vendor.lineage.touch-service.gtaxlwifi
+    class hal
+    user system
+    group system

@@ -137,6 +137,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_VENDOR_PROPERTIES += \
     ro.minui.pixel_format=BGRX_8888
 
+# Input: stmfts reports the capacitive keys as KEY_MENU and KEY_BACK; on
+# this tablet they are recents (left) and back (right).
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/rootdir/usr/keylayout/stmfts.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/stmfts.kl
+
+# Touch: key swapping and disabling for the capacitive keys
+PRODUCT_PACKAGES += \
+    vendor.lineage.touch-service.gtaxlwifi
+
 # Wi-Fi
 PRODUCT_PACKAGES += \
     android.hardware.wifi-service \
