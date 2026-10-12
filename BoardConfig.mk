@@ -85,6 +85,24 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 134217728
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/bootimg/mkbootimg.mk
+# Required by the non-A/B package (HasRecoveryPatch)
+BOARD_USES_FULL_RECOVERY_IMAGE := true
+
+# OTA
+TARGET_SKIP_OTA_PACKAGE := false
+TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
+
+# AVB: the loader ignores vbmeta and the state is orange, so the first stage
+# reads vbmeta (p23) itself and sets up dm-verity on the partitions with
+# "avb" in the fstab: vendor and vendor_dlkm, not system. boot is not
+# chained: libavb would look for a partition named "boot", and S-BOOT's is
+# BOOT.
+BOARD_AVB_ENABLE := true
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 2
+
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/configs/fstab/recovery.fstab
 
 # Cache: the CACHE partition (p20), for /cache/recovery. cache.img is not
