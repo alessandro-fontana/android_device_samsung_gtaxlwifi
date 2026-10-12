@@ -35,6 +35,11 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.graphics.card.name=exynos \
     ro.vendor.graphics.render.name=panfrost \
     vendor.hwc.drm.device=/dev/dri/card0
+# Buffers the CPU reads often, such as the RGB input of the video encoder,
+# from the cached system heap instead of write-combined GPU memory
+PRODUCT_VENDOR_PROPERTIES += \
+    vendor.minigbm.gbm_mesa.cpu_read_heap=true
+
 # SoC
 PRODUCT_VENDOR_PROPERTIES += \
     ro.soc.manufacturer=samsung \
