@@ -36,6 +36,37 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.soc.manufacturer=samsung \
     ro.soc.model=exynos7870
 
+# Media: the example v4l2_codec2 configuration declares 4K and secure codecs
+# the 7870 MFC does not have.
+TARGET_V4L2_CODEC2_USE_EXAMPLE_CONFIGURATION := false
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/media/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml \
+    $(DEVICE_PATH)/configs/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
+# Pool mask: the example one plus GRALLOC (bit 17). Basic pool blocks have
+# no stable id, so v4l2_codec2 cannot bind them to V4L2 buffers.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.v4l2_codec2.decode_concurrent_instances=4 \
+    ro.vendor.v4l2_codec2.encode_concurrent_instances=4 \
+    debug.stagefright.c2-poolmask=0xf70000
+# Every decoder input buffer is mapped whole into the MFC's 256 MB IOVA
+# space: 16 MB ones (the default) do not fit, 3 MB is the MFC's own stream
+# buffer for 1080p.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.v4l2_codec2.decoder.input_buffer_size=3145728
+# Each codec must also be listed in media_codecs_c2.xml. The 7870 MFC
+# firmware has no VP9.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.v4l2_codec2.decoder.supported.h263=true \
+    ro.vendor.v4l2_codec2.decoder.supported.h264=true \
+    ro.vendor.v4l2_codec2.decoder.supported.hevc=true \
+    ro.vendor.v4l2_codec2.decoder.supported.mpeg4=true \
+    ro.vendor.v4l2_codec2.decoder.supported.vp8=true \
+    ro.vendor.v4l2_codec2.encoder.supported.h263=true \
+    ro.vendor.v4l2_codec2.encoder.supported.h264=true \
+    ro.vendor.v4l2_codec2.encoder.supported.hevc=true \
+    ro.vendor.v4l2_codec2.encoder.supported.mpeg4=true \
+    ro.vendor.v4l2_codec2.encoder.supported.vp8=true
+
 # Proprietary
 $(call inherit-product, vendor/samsung/gtaxlwifi/gtaxlwifi-vendor.mk)
 

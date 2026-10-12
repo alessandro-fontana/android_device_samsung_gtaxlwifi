@@ -1,0 +1,15 @@
+# Hardware codecs (MFC) via external/v4l2_codec2
+
+# Codec2 BufferPool FMQs are app-created memfds (same rule as mediaswcodec)
+allow mediacodec appdomain:memfd_file { getattr read write map };
+
+vendor_internal_prop(vendor_v4l2_codec2_prop)
+set_prop(vendor_init, vendor_v4l2_codec2_prop)
+get_prop(mediacodec, vendor_v4l2_codec2_prop)
+
+# Mesa (surface input) looks up unset mesa.* overrides
+dontaudit mediacodec default_prop:file { getattr open read map };
+
+# Harmless probes, as in minigbm's cros_gralloc/sepolicy
+dontaudit mediaserver vendor_minigbm_prop:file read;
+dontaudit mediaswcodec sysfs_gpu:dir search;
