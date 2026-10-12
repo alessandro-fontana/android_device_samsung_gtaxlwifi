@@ -99,6 +99,10 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/audio/audio.gtaxlwifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio.gtaxlwifi.xml \
     $(DEVICE_PATH)/configs/audio/primary_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/primary_audio_policy_configuration.xml
 
+# Wi-Fi PNO with the screen off
+PRODUCT_PACKAGES += \
+    GtaxlWifiOverlay
+
 # ueventd: imported by ueventd.mainline.rc
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/init/ueventd.gtaxlwifi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.gtaxlwifi.rc
@@ -108,6 +112,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/init/gtaxl-recovery.rc:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/init/gtaxl-recovery.rc \
     $(DEVICE_PATH)/rootdir/etc/gtaxl-misc.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/gtaxl-misc.sh
+
+# Wi-Fi
+PRODUCT_PACKAGES += \
+    android.hardware.wifi-service \
+    libwifi-hal-gtaxl
+
+# Wi-Fi Direct: wpa_supplicant creates the nl80211 P2P_DEVICE itself
+PRODUCT_VENDOR_PROPERTIES += \
+    wifi.direct.interface=p2p-dev-wlan0
 
 # APEX compression: super is too small for uncompressed APEXes. It is the
 # default today, but RELEASE_APEX_MOUNT_BEFORE_DATA would turn it off.
@@ -152,6 +165,13 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Storage
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
+# Wi-Fi: cfg80211 loads the regulatory database from the ramdisk
+PRODUCT_COPY_FILES += \
+    external/linux-firmware-mainline/wireless-regdb/regulatory.db:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/regulatory.db \
+    external/linux-firmware-mainline/wireless-regdb/regulatory.db.p7s:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/regulatory.db.p7s
+PRODUCT_COPY_FILES += \
+    external/wpa_supplicant_8/wpa_supplicant/wpa_supplicant_template.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf
 
 # OTA: extracted by the updater to /tmp/install
 PRODUCT_COPY_FILES += \
