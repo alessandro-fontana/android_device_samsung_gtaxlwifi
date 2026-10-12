@@ -122,6 +122,18 @@ PRODUCT_PACKAGES += \
 PRODUCT_VENDOR_PROPERTIES += \
     wifi.direct.interface=p2p-dev-wlan0
 
+# GPS: Broadcom BCM4752 on ttySAC0, driven by the proprietary gpsd.
+# gtaxl-gps-rfkill.sh links the power control gpsd uses; the chip starts
+# off until gpsd needs it.
+PRODUCT_PACKAGES += \
+    android.hardware.gnss-service.gtaxlwifi \
+    libwrappergps
+
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/rootdir/bin/gtaxl-gps-rfkill.sh:$(TARGET_COPY_OUT_VENDOR)/bin/gtaxl-gps-rfkill.sh \
+    $(DEVICE_PATH)/rootdir/etc/gps/gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gps.xml \
+    $(DEVICE_PATH)/rootdir/etc/init/gps.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gps.rc
+
 # Bluetooth: the QCA9377 answers APCF READ_EXTENDED_FEATURES with the bare
 # OCF and the stack aborts. Basic APCF works.
 PRODUCT_VENDOR_PROPERTIES += \

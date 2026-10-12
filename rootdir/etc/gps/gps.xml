@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  gpsd (Broadcom glgps) configuration for the BCM4752.
+  GpioNStdbyPath is a link to the GPS rfkill state (gtaxl-gps-rfkill.sh).
+-->
+<glgps xmlns="http://www.glpals.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.glpals.com/glconfig.xsd" >
+  <hal
+       PortName="/dev/ttySAC0"
+       BaudRate="921600"
+       GpioNStdbyPath="/data/vendor/gps/nstdby"
+       GpioDelayMs="250"
+       NvStorageDir="/data/vendor/gps/"
+
+       LogDirectory="/data/vendor/gps/log"
+
+       LPmode="false"
+       ReAidingOnHotStart="false"
+       RILEnabled="false"
+       SuplEnable="false"
+       SuplUseApn="false"
+
+       LbsEnable="false"
+       LbsServer="BCMLS2.glpals.com"
+       HttpSyncLto="false"
+       LbsCellEnable="false"
+       LtoDir="/data/vendor/gps/"
+       LtoSyncThresholdDays="1"
+
+       IgnoreJniTime="true"
+       HulaEnable="false"
+       AssertEnabled="false"
+       DisablePglorNmeaCallback="true"
+   />
+
+  <gll
+       LogPriMask="LOG_INFO"
+       LogFacMask="LOG_GLLIO | LOG_GLLAPI"
+       FrqPlan="FRQ_PLAN_26MHZ_2PPM"
+       RfType="GL_RF_47520_BRCM_EXT_LNA"
+       WarmStandbyTimeout1Seconds="10"
+       WarmStandbyTimeout2Seconds="15"
+  >
+  </gll>
+
+  <gll_features
+       EnableLowPowerPmm="true"
+  />
+
+</glgps>

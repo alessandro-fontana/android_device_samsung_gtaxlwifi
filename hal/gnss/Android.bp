@@ -1,0 +1,36 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// AIDL IGnss on top of Broadcom's legacy gps.default.so, which talks to gpsd
+cc_binary {
+    name: "android.hardware.gnss-service.gtaxlwifi",
+    relative_install_path: "hw",
+    init_rc: ["android.hardware.gnss-service.gtaxlwifi.rc"],
+    vintf_fragments: ["android.hardware.gnss-service.gtaxlwifi.xml"],
+    vendor: true,
+
+    srcs: [
+        "Gnss.cpp",
+        "service.cpp",
+    ],
+
+    header_libs: [
+        "libhardware_headers",
+    ],
+
+    shared_libs: [
+        "android.hardware.gnss-V6-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libhardware",
+        "liblog",
+        "libutils",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}

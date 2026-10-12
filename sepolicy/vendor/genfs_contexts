@@ -18,3 +18,6 @@ genfscon sysfs /devices/platform/soc@0/138a0000.i2c u:object_r:sysfs_media_gtaxl
 genfscon sysfs /devices/platform/soc@0/138b0000.i2c u:object_r:sysfs_media_gtaxl:s0
 # Prefix match: the sm5703-flash.N.auto id is not stable
 genfscon sysfs /devices/platform/soc@0/13870000.i2c/i2c-4/4-0049/sm5703-flash u:object_r:sysfs_camera_flash_gtaxl:s0
+
+# GPS
+genfscon sysfs /devices/platform/gps/rfkill u:object_r:sysfs_gps:s0

@@ -1,0 +1,57 @@
+# GPS: BCM4752 on ttySAC0
+#   gpsd              Broadcom glgps daemon (blob)
+#   hal_gnss_default  android.hardware.gnss-service.gtaxlwifi
+#   gtaxl_gps_rfkill  links the rfkill power-on file for gpsd (gps.rc)
+
+type gpsd, domain;
+type gpsd_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(gpsd)
+
+type gtaxl_gps_rfkill, domain;
+type gtaxl_gps_rfkill_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(gtaxl_gps_rfkill)
+
+# Receiver state and the gpsd <-> HAL pipes
+type gps_vendor_data_file, file_type, data_file_type;
+
+type sysfs_gps, fs_type, sysfs_type;
+
+# gpsd
+allow gpsd gnss_device:chr_file rw_file_perms;
+
+allow gpsd gps_vendor_data_file:dir create_dir_perms;
+allow gpsd gps_vendor_data_file:{ file fifo_file } create_file_perms;
+allow gpsd gps_vendor_data_file:lnk_file read;
+allow gpsd sysfs_gps:dir search;
+allow gpsd sysfs_gps:file rw_file_perms;
+
+wakelock_use(gpsd)
+
+# Writing the rfkill state requires CAP_NET_ADMIN
+allow gpsd self:capability net_admin;
+
+# gpsd aborts every 5 s without network access. Downloads are off in gps.xml:
+# assistance data comes from the framework, only when the user enables it.
+net_domain(gpsd)
+
+# Unneeded probes: /cache/glgpsctrl debug channel, a test app dir under
+# /data/data, and modem properties (no modem on this device)
+dontaudit gpsd cache_file:lnk_file read;
+dontaudit gpsd system_data_file:dir search;
+dontaudit gpsd radio_prop:file { read open getattr map };
+
+# hal_gnss_default
+allow hal_gnss_default gps_vendor_data_file:dir rw_dir_perms;
+allow hal_gnss_default gps_vendor_data_file:{ file fifo_file } create_file_perms;
+
+# gtaxl_gps_rfkill
+allow gtaxl_gps_rfkill vendor_shell_exec:file rx_file_perms;
+allow gtaxl_gps_rfkill vendor_toolbox_exec:file rx_file_perms;
+# stdio_to_kmsg opens /dev/kmsg_debug
+allow gtaxl_gps_rfkill kmsg_debug_device:chr_file { getattr ioctl write };
+
+allow gtaxl_gps_rfkill sysfs_gps:dir r_dir_perms;
+allow gtaxl_gps_rfkill sysfs_gps:file getattr;
+allow gtaxl_gps_rfkill gps_vendor_data_file:dir rw_dir_perms;
+# toybox ln -sf creates the link under a temporary name and renames it
+allow gtaxl_gps_rfkill gps_vendor_data_file:{ file lnk_file } create_file_perms;
