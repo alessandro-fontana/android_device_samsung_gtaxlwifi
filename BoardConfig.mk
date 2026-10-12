@@ -39,6 +39,12 @@ BOARD_RAMDISK_USE_LZ4 := true
 # policy: it creates the keyring for the regulatory.db signature.
 BOOT_KERNEL_MODULES := cfg80211.ko
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := cfg80211.ko
+# The recovery does not mount vendor_dlkm: without the fuel gauge and the
+# charger it finds no battery, and waits 5 s for one with a black screen.
+RECOVERY_KERNEL_MODULES := sm5703_fuelgauge.ko sm5703-charger.ko
+BOARD_RECOVERY_KERNEL_MODULES_LOAD := sm5703_fuelgauge.ko sm5703-charger.ko
+TARGET_AUTO_COLLECT_KERNEL_MODULE_DEPS := true
+
 # Platform
 TARGET_BOARD_PLATFORM := exynos7870
 
@@ -79,6 +85,8 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 134217728
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/bootimg/mkbootimg.mk
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/configs/fstab/recovery.fstab
+
 # Cache: the CACHE partition (p20), for /cache/recovery. cache.img is not
 # installed.
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
