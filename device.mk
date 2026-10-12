@@ -50,6 +50,10 @@ $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-he
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_USE_DYNAMIC_PARTITION_SIZE := true
 
+# Images: boot.img is built by bootimg/mkbootimg.mk
+PRODUCT_BUILD_BOOT_IMAGE := true
+PRODUCT_BUILD_RAMDISK_IMAGE := true
+
 # Keep the build's model (SM-T580) instead of the device tree's
 $(call soong_config_set,mainline_common_libinit,set_properties_from,none)
 
