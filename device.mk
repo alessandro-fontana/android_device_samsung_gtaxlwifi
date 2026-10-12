@@ -36,6 +36,10 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.soc.manufacturer=samsung \
     ro.soc.model=exynos7870
 
+# Charging control: with charging inhibited the buck stays on and the tablet
+# runs from the charger (bypass).
+PRODUCT_PACKAGES += \
+    vendor.lineage.health-service.default
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.flash-autofocus.prebuilt.xml \
@@ -112,6 +116,16 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/init/gtaxl-recovery.rc:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/init/gtaxl-recovery.rc \
     $(DEVICE_PATH)/rootdir/etc/gtaxl-misc.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/gtaxl-misc.sh
+
+# Health: filters spurious cable unplugs in charging mode
+PRODUCT_PACKAGES += \
+    android.hardware.health-service.example_recovery \
+    android.hardware.health-service.gtaxlwifi \
+    charger_res_images_vendor
+
+# Charging mode: with RGB565 minui's gr_clear() overruns the mapping
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.minui.pixel_format=BGRX_8888
 
 # Wi-Fi
 PRODUCT_PACKAGES += \

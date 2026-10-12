@@ -21,3 +21,8 @@ genfscon sysfs /devices/platform/soc@0/13870000.i2c/i2c-4/4-0049/sm5703-flash u:
 
 # GPS
 genfscon sysfs /devices/platform/gps/rfkill u:object_r:sysfs_gps:s0
+
+# Battery and charger
+genfscon sysfs /devices/platform/soc@0/13830000.i2c/i2c-1/1-0071/power_supply u:object_r:sysfs_batteryinfo:s0
+genfscon sysfs /devices/platform/soc@0/13870000.i2c/i2c-4/4-0049/sm5703-charger.1.auto/power_supply u:object_r:sysfs_batteryinfo:s0
+genfscon sysfs /devices/platform/soc@0/13850000.i2c/i2c-3/3-0025/extcon u:object_r:sysfs_extcon:s0

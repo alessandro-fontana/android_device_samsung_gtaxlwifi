@@ -1,0 +1,2 @@
+# minui needs search on /dev/dri, not only access to the nodes
+allow charger_type gpu_device:dir r_dir_perms;

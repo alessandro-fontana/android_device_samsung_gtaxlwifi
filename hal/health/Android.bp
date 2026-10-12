@@ -1,0 +1,22 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// AOSP default health HAL plus a filter for spurious cable unplugs in
+// charger mode. Recovery uses AOSP's example_recovery.
+
+cc_binary {
+    name: "android.hardware.health-service.gtaxlwifi",
+    vendor: true,
+    relative_install_path: "hw",
+    init_rc: ["android.hardware.health-service.gtaxlwifi.rc"],
+    vintf_fragments: ["android.hardware.health-service.gtaxlwifi.xml"],
+    defaults: ["libhealth_aidl_impl_user"],
+    static_libs: ["libhealth_aidl_impl"],
+    srcs: [
+        "GtaxlHealth.cpp",
+        "service.cpp",
+    ],
+    overrides: ["charger"],
+}
