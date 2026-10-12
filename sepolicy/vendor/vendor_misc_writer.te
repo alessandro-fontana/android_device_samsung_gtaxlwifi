@@ -1,0 +1,4 @@
+# gtaxl-entropy-seed.sh keeps the entropy seed in the vendor space of misc
+allow vendor_misc_writer vendor_shell_exec:file rx_file_perms;
+allow vendor_misc_writer vendor_toolbox_exec:file rx_file_perms;
+allow vendor_misc_writer block_device:lnk_file read;

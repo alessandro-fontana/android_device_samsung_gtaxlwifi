@@ -199,6 +199,11 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.iio.intensity.name=CM3323 \
     ro.vendor.iio.intensity.vendor=Capella_Microsystems
 
+# Entropy seed kept across boots, to avoid waiting for the CRNG
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/rootdir/bin/gtaxl-entropy-seed.sh:$(TARGET_COPY_OUT_VENDOR)/bin/gtaxl-entropy-seed.sh \
+    $(DEVICE_PATH)/rootdir/etc/init/gtaxl-entropy-seed.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gtaxl-entropy-seed.rc
+
 # Bluetooth: the QCA9377 answers APCF READ_EXTENDED_FEATURES with the bare
 # OCF and the stack aborts. Basic APCF works.
 PRODUCT_VENDOR_PROPERTIES += \
