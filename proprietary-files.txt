@@ -1,0 +1,17 @@
+# GPS - Broadcom BCM4752
+# From Galaxy A8 2016 (SM-A810S) A810SKSS2CTI1: the stock firmware has only
+# 32-bit blobs. gpsd is modified by blob_fixups in extract-files.py.
+vendor/bin/hw/gpsd|f1789b42062319cba9ef697c6343158197b95bf3|92c07ec07879a5c54d27aa1c29f500d4aa5e1d5c
+vendor/lib64/hw/gps.default.so|7ff3490a1a12f3397a26e2207ad9c3bf93e624a9|ce422828cad509cf0fecff55abec2055fde94789
+
+# Wi-Fi and Bluetooth firmware - Qualcomm QCA9377
+# firmware-sdio-5.bin and rampatch from linux-firmware; board.bin and nvm
+# from SM-T580 T580XXS5CTK1 (bdwlan30.bin, nvm_tlv_tf_1.1.bin).
+vendor/firmware/ath10k/QCA9377/hw1.0/firmware-sdio-5.bin|0986815c9ef8d06d5d880a0fe035a758d0a88d0d
+vendor/firmware/ath10k/QCA9377/hw1.0/board.bin|643a919ab575c6b48da619d67bf1594bee73ee56
+vendor/firmware/qca/rampatch_00230302.bin|1c78d570abc7e5f48da32aabf21b4b0b579f88df
+vendor/firmware/qca/nvm_00230302.bin|ad089b97a8f1ea4463d0bbca03131d0329747d02
+
+# MFC video codec firmware - Exynos 7870 (MFC v10)
+# From SM-T580 T580XXS5CTK1, renamed for mainline s5p-mfc.
+vendor/firmware/mfc_fw.bin:vendor/firmware/s5p-mfc-v10.fw|f055d7e10134bad30021d6be36ac82e7927d6100

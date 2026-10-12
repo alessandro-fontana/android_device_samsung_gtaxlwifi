@@ -36,6 +36,9 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.soc.manufacturer=samsung \
     ro.soc.model=exynos7870
 
+# Proprietary
+$(call inherit-product, vendor/samsung/gtaxlwifi/gtaxlwifi-vendor.mk)
+
 # Characteristics
 PRODUCT_CHARACTERISTICS := tablet
 

@@ -138,3 +138,6 @@ BOARD_SUPER_PARTITION_SIZE := 3565158400
 BOARD_SUPER_PARTITION_GROUPS := gtaxl
 BOARD_GTAXL_SIZE := 3560964096
 BOARD_GTAXL_PARTITION_LIST := system product system_ext vendor vendor_dlkm system_dlkm
+
+# Proprietary
+-include vendor/samsung/gtaxlwifi/BoardConfigVendor.mk
