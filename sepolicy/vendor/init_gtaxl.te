@@ -1,0 +1,2 @@
+# file_contexts labels these partitions by name; init relabels their nodes
+allow init { cache_block_device userdata_block_device metadata_block_device }:blk_file relabelto;

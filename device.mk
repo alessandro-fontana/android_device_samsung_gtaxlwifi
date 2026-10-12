@@ -39,6 +39,10 @@ PRODUCT_VENDOR_PROPERTIES += \
 # Characteristics
 PRODUCT_CHARACTERISTICS := tablet
 
+# ueventd: imported by ueventd.mainline.rc
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/init/ueventd.gtaxlwifi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.gtaxlwifi.rc
+
 # APEX compression: super is too small for uncompressed APEXes. It is the
 # default today, but RELEASE_APEX_MOUNT_BEFORE_DATA would turn it off.
 OVERRIDE_PRODUCT_COMPRESSED_APEX := true
@@ -54,6 +58,14 @@ PRODUCT_USE_DYNAMIC_PARTITION_SIZE := true
 PRODUCT_BUILD_BOOT_IMAGE := true
 PRODUCT_BUILD_RAMDISK_IMAGE := true
 
+# Init
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/fstab/fstab.gtaxlwifi:$(TARGET_COPY_OUT_RAMDISK)/fstab.gtaxlwifi \
+    $(DEVICE_PATH)/configs/fstab/fstab.gtaxlwifi:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.gtaxlwifi \
+    $(DEVICE_PATH)/configs/init/init.gtaxlwifi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.gtaxlwifi.rc
+PRODUCT_PACKAGES += \
+    vndservicemanager \
+    zram.rc
 # Keep the build's model (SM-T580) instead of the device tree's
 $(call soong_config_set,mainline_common_libinit,set_properties_from,none)
 
