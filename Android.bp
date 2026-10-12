@@ -3,6 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+// Power: required by the perfmgr-lineage option
+prebuilt_etc {
+    name: "powerhint.json",
+    src: "configs/power/powerhint.json",
+    vendor: true,
+}
+
 // Camera: required by the libcamera provider option
 prebuilt_etc {
     name: "libcamera_camera_hal.yaml",
