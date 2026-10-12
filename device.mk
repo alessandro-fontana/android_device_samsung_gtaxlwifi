@@ -42,6 +42,11 @@ $(call inherit-product, vendor/samsung/gtaxlwifi/gtaxlwifi-vendor.mk)
 # Characteristics
 PRODUCT_CHARACTERISTICS := tablet
 
+# Audio: TinyHAL opens /vendor/etc/audio.<ro.product.vendor.device>.xml
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/audio/audio.gtaxlwifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio.gtaxlwifi.xml \
+    $(DEVICE_PATH)/configs/audio/primary_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/primary_audio_policy_configuration.xml
+
 # ueventd: imported by ueventd.mainline.rc
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/init/ueventd.gtaxlwifi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.gtaxlwifi.rc

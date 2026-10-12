@@ -5,3 +5,6 @@ genfscon sysfs /devices/platform/soc@0/11400000.gpu u:object_r:sysfs_gpu:s0
 
 # USB
 genfscon sysfs /devices/platform/soc@0/soc@0:usb@13600000/13600000.usb/udc u:object_r:sysfs_udc:s0
+
+# Audio
+genfscon sysfs /devices/platform/sound/sound u:object_r:sysfs_sound:s0

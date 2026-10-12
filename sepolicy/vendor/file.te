@@ -1,0 +1,2 @@
+# Sound card nodes, labelled in genfs_contexts
+type sysfs_sound, fs_type, sysfs_type;
