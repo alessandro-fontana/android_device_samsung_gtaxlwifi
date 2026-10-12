@@ -1,0 +1,22 @@
+[
+  {
+    "repository": "android_device_mainline_common",
+    "target_path": "device/mainline/common"
+  },
+  {
+    "repository": "android_kernel_mainline_configs",
+    "target_path": "kernel/mainline/configs"
+  },
+  {
+    "repository": "android_hardware_intel_sensors-iio",
+    "target_path": "hardware/intel/sensors-iio"
+  },
+  {
+    "repository": "android_hardware_linaro_libpm",
+    "target_path": "hardware/linaro/libpm"
+  },
+  {
+    "repository": "android_external_tinyhal",
+    "target_path": "external/tinyhal"
+  }
+]

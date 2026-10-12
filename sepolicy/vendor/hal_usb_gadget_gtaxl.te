@@ -1,0 +1,5 @@
+# vendor.usb.rndis.config names the RNDIS function in configfs (rndis.gs4)
+get_prop(hal_usb_gadget_default, vendor_usb_prop)
+
+# sys.usb.controller names the UDC the gadget is bound to
+get_prop(hal_usb_gadget_default, usb_control_prop)
