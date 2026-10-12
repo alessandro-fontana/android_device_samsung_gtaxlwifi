@@ -113,6 +113,10 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/audio/audio.gtaxlwifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio.gtaxlwifi.xml \
     $(DEVICE_PATH)/configs/audio/primary_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/primary_audio_policy_configuration.xml
 
+# Doze: no AOD
+PRODUCT_PACKAGES += \
+    GtaxlNoAodOverlay
+
 # Wi-Fi PNO with the screen off
 PRODUCT_PACKAGES += \
     GtaxlWifiOverlay
@@ -167,6 +171,21 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/gps/gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gps.xml \
     $(DEVICE_PATH)/rootdir/etc/init/gps.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gps.rc
 
+# Overlays
+PRODUCT_PACKAGE_OVERLAYS += \
+    $(DEVICE_PATH)/overlay
+
+# Permissions
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/tablet_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tablet_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+    $(DEVICE_PATH)/rootdir/etc/permissions/gtaxl_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/gtaxl_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
+    frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
+    frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
+    frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.accelerometer.xml \
+    frameworks/native/data/etc/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.light.xml
+
 # Sensors: the accelerometer has no IRQ, so the IIO HAL must poll
 PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.iio.accel.quirks=no-trig \
@@ -184,6 +203,16 @@ PRODUCT_VENDOR_PROPERTIES += \
 # OCF and the stack aborts. Basic APCF works.
 PRODUCT_VENDOR_PROPERTIES += \
     bluetooth.le.disable_apcf_extended_features=1
+
+# Graphics: blur and the overscroll stretch layer are too costly for the
+# Mali-T830 MC1: config_avoidGfxAccel selects the uniform scale stretch,
+# and stretch_uniform_skips_layer (the frameworks/base change in patches/)
+# drops its layer. The DECON has no per-plane scaler, so scaled layers go
+# to the GPU.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.surface_flinger.supports_background_blur=0 \
+    debug.hwui.stretch_uniform_skips_layer=true \
+    vendor.hwc.drm.scale_with_gpu=1
 
 # APEX compression: super is too small for uncompressed APEXes. It is the
 # default today, but RELEASE_APEX_MOUNT_BEFORE_DATA would turn it off.

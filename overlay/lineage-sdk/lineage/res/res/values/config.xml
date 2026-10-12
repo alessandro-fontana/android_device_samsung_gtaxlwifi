@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Hardware keys:
+           1 - Home
+           2 - Back (capacitive)
+          16 - App switch (capacitive)
+          64 - Volume rocker -->
+    <integer name="config_deviceHardwareKeys">83</integer>
+
+    <!-- Wake keys: Home and Volume rocker. The capacitive keys belong to
+         the touchscreen controller, which is off in suspend. -->
+    <integer name="config_deviceHardwareWakeKeys">65</integer>
+</resources>
