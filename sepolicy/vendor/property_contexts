@@ -1,3 +1,6 @@
+# Camera
+vendor.camera.libcamera.    u:object_r:vendor_camera_libcamera_prop:s0
+
 # Composer: scale layers on the GPU, the DECON has no per-plane scaler
 vendor.hwc.drm.scale_with_gpu    u:object_r:vendor_hwc_drm_prop:s0 exact int
 

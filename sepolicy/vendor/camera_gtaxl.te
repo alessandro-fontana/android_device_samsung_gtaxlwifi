@@ -1,0 +1,31 @@
+# libcamera AIDL camera provider (hal_camera_default)
+
+# libcamera enumerates /sys/bus/media/devices and reads uevent of the linked nodes
+type sysfs_media_gtaxl, sysfs_type, fs_type;
+allow hal_camera_default sysfs_media_gtaxl:dir r_dir_perms;
+allow hal_camera_default sysfs_media_gtaxl:lnk_file read;
+
+allow hal_camera_default sysfs_media_gtaxl:file r_file_perms;
+
+vendor_internal_prop(vendor_camera_libcamera_prop)
+get_prop(hal_camera_default, vendor_camera_libcamera_prop)
+
+# Intermediate and JPEG buffers are allocated in-process via gralloc (minigbm)
+hal_client_domain(hal_camera_default, hal_graphics_allocator)
+allow hal_camera_default hal_graphics_mapper_service:service_manager find;
+get_prop(hal_camera_default, vendor_minigbm_prop)
+
+# The minigbm mapper (gbm_mesa) opens the GPU node in every process that loads it
+gpu_access(hal_camera_default)
+gpu_access(cameraserver)
+gpu_access(mediaserver)
+
+# Preview buffers return with an acquire fence created by the composer
+allow hal_camera_default hal_graphics_composer_default:fd use;
+
+# SM5703 flash LED (torch and photo flash)
+type sysfs_camera_flash_gtaxl, fs_type, sysfs_type;
+allow hal_camera_default sysfs_camera_flash_gtaxl:dir search;
+allow hal_camera_default sysfs_camera_flash_gtaxl:file rw_file_perms;
+allow hal_camera_default sysfs_leds:dir search;
+allow hal_camera_default sysfs_leds:lnk_file read;

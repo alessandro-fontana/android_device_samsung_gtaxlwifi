@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: CC0-1.0
+# libcamera software ISP tuning for the S5K4H5YC (rear), not calibrated
+%YAML 1.1
+---
+version: 1
+algorithms:
+  # 64 out of 1023 at 16 bits: the typical value for Samsung 10-bit sensors
+  - BlackLevel:
+      blackLevel: 4096
+  - Awb:
+  # Saturation 2.1 around Rec.601 luminance; rows sum to 1
+  - Ccm:
+      ccms:
+        - ct: 6500
+          ccm: [  1.7711, -0.6457, -0.1254,
+                 -0.3289,  1.4543, -0.1254,
+                 -0.3289, -0.6457,  1.9746 ]
+  - Lut:
+      gamma: 0.4
+      contrast: 1.3
+  # binningGain: binned over full-resolution brightness (binning averages).
+  # flickerPeriod: against banding from 50 Hz lights.
+  - Agc:
+      flickerPeriod: 10000
+      binningGain: 1.0
+      msvMin: 2.3
+      saturatedMax: 0.04
+  # EEPROM infinity 492 and macro 665 DAC codes, plus a 25% margin
+  - Af:
+      lensMin: 450
+      lensMax: 710
+...

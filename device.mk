@@ -36,6 +36,11 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.soc.manufacturer=samsung \
     ro.soc.model=exynos7870
 
+# Camera
+PRODUCT_PACKAGES += \
+    android.hardware.camera.flash-autofocus.prebuilt.xml \
+    gtaxlwifi-camera-features.xml
+
 # Media: the example v4l2_codec2 configuration declares 4K and secure codecs
 # the 7870 MFC does not have.
 TARGET_V4L2_CODEC2_USE_EXAMPLE_CONFIGURATION := false
@@ -66,6 +71,22 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.v4l2_codec2.encoder.supported.hevc=true \
     ro.vendor.v4l2_codec2.encoder.supported.mpeg4=true \
     ro.vendor.v4l2_codec2.encoder.supported.vp8=true
+
+# Camera metadata FMQ sizes (the HAL defaults): without them the HAL reads
+# ro.camera.*, which a vendor service cannot access.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.camera.req.fmq.size=1048576 \
+    ro.vendor.camera.res.fmq.size=1048576
+
+# Restart the codec and camera services when the graphics allocator restarts
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/rootdir/etc/init/gtaxl-allocator-restart.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gtaxl-allocator-restart.rc
+
+# Camera tuning for the libcamera software ISP
+PRODUCT_PACKAGES += \
+    libcamera_ipa_simple_uncalibrated.yaml \
+    libcamera_ipa_simple_s5k4h5yc.yaml \
+    libcamera_ipa_simple_sr259.yaml
 
 # Proprietary
 $(call inherit-product, vendor/samsung/gtaxlwifi/gtaxlwifi-vendor.mk)
