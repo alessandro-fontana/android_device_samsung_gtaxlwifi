@@ -38,6 +38,10 @@ PRODUCT_VENDOR_PROPERTIES += \
 # Characteristics
 PRODUCT_CHARACTERISTICS := tablet
 
+# ueventd: imported by ueventd.mainline.rc
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/init/ueventd.gtaxlwifi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.gtaxlwifi.rc
+
 # APEX compression: super is too small for uncompressed APEXes. It is the
 # default today, but RELEASE_APEX_MOUNT_BEFORE_DATA would turn it off.
 OVERRIDE_PRODUCT_COMPRESSED_APEX := true
