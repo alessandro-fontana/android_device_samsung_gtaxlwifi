@@ -1,0 +1,30 @@
+#
+# SPDX-FileCopyrightText: 2026 The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Super
+system      /system      ext4  ro wait,logical,first_stage_mount
+system_ext  /system_ext  ext4  ro wait,logical,first_stage_mount
+product     /product     ext4  ro wait,logical,first_stage_mount
+vendor      /vendor      erofs ro wait,logical,first_stage_mount,avb=vbmeta
+vendor_dlkm /vendor_dlkm erofs ro wait,logical,first_stage_mount,avb=vbmeta
+system_dlkm /system_dlkm erofs ro wait,logical,first_stage_mount
+
+# Userdata
+# /metadata is not latemount: init.rc and aconfigd need it before post-fs.
+/dev/block/by-name/metadata /metadata ext4 nosuid,nodev,noatime,errors=panic wait,check,formattable,first_stage_mount
+/dev/block/by-name/CACHE    /cache    ext4 nosuid,nodev,noatime wait,check,formattable
+/dev/block/by-name/USERDATA /data     ext4 nosuid,nodev,noatime,errors=panic latemount,wait,check,formattable,quota,reservedsize=128M,fileencryption=aes-256-xts:aes-256-cts:v2,fsverity
+
+# External
+# vold matches without FNM_PATHNAME, so `*` crosses `/`
+/devices/platform/soc@0/13560000.mmc/mmc_host* auto auto nosuid,nodev,noatime voldmanaged=sdcard1:auto,encryptable=userdata
+/devices/*/usb* auto auto defaults voldmanaged=usb:auto
+
+# Misc
+# Without it, init cannot write the BCB and reboot to recovery does nothing
+/dev/block/by-name/misc /misc emmc defaults defaults
+
+# ZRAM
+/dev/block/zram0 none swap defaults zramsize=100%,max_comp_streams=-1

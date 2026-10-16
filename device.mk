@@ -53,6 +53,11 @@ PRODUCT_USE_DYNAMIC_PARTITION_SIZE := true
 PRODUCT_BUILD_BOOT_IMAGE := true
 PRODUCT_BUILD_RAMDISK_IMAGE := true
 
+# Fstab
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/fstab/fstab.gtaxlwifi:$(TARGET_COPY_OUT_RAMDISK)/fstab.gtaxlwifi \
+    $(DEVICE_PATH)/configs/fstab/fstab.gtaxlwifi:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.gtaxlwifi
+
 # Keep the build's model (SM-T580) instead of the device tree's
 $(call soong_config_set,mainline_common_libinit,set_properties_from,none)
 
