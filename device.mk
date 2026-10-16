@@ -167,6 +167,10 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/gps/gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gps.xml \
     $(DEVICE_PATH)/rootdir/etc/init/gps.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gps.rc
 
+# Overlays
+PRODUCT_PACKAGE_OVERLAYS += \
+    $(DEVICE_PATH)/overlay
+
 # Sensors: only the IIO backend; the default list adds the input backend
 # and mock gyroscope, magnetometer and proximity sensors
 $(call soong_config_set,sensors_hal_mainline,load_custom_backends,iio)
@@ -175,6 +179,16 @@ $(call soong_config_set,sensors_hal_mainline,load_custom_backends,iio)
 # OCF and the stack aborts. Basic APCF works.
 PRODUCT_VENDOR_PROPERTIES += \
     bluetooth.le.disable_apcf_extended_features=1
+
+# Graphics: blur and the overscroll stretch layer are too costly for the
+# Mali-T830 MC1: config_avoidGfxAccel selects the uniform scale stretch,
+# and stretch_uniform_skips_layer (the frameworks/base change in patches/)
+# drops its layer. The DECON has no per-plane scaler, so scaled layers go
+# to the GPU.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.surface_flinger.supports_background_blur=0 \
+    debug.hwui.stretch_uniform_skips_layer=true \
+    vendor.hwc.drm.scale_with_gpu=1
 
 # APEX compression: super is too small for uncompressed APEXes. It is the
 # default today, but RELEASE_APEX_MOUNT_BEFORE_DATA would turn it off.

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2009, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Without the multi-desk backend, freeform activities crash SystemUI
+         ("Root not found for desk: 0") -->
+    <bool name="config_canInternalDisplayHostDesktops">false</bool>
+
+    <!-- Magnetic cover (SW_LID) -->
+    <bool name="config_lidControlsSleep">true</bool>
+    <bool name="config_lidControlsScreenLock">false</bool>
+
+    <!-- Automatic brightness: config_autoBrightnessLevels are raw counts of
+         the CM3323 clear channel, not lux. Reference readings: ~700 dim
+         room, ~1950 bright room, ~8100 outdoor shade, ~56000 direct sun. -->
+    <bool name="config_automatic_brightness_available">true</bool>
+
+    <integer-array name="config_autoBrightnessLevels">
+        <item>10</item>
+        <item>30</item>
+        <item>80</item>
+        <item>200</item>
+        <item>450</item>
+        <item>900</item>
+        <item>1600</item>
+        <item>5000</item>
+        <item>20000</item>
+    </integer-array>
+
+    <integer-array name="config_autoBrightnessLcdBacklightValues">
+        <item>10</item>
+        <item>20</item>
+        <item>35</item>
+        <item>60</item>
+        <item>90</item>
+        <item>130</item>
+        <item>175</item>
+        <item>200</item>
+        <item>235</item>
+        <item>255</item>
+    </integer-array>
+
+    <!-- Navigation bar; the capacitive keys can be disabled instead -->
+    <bool name="config_showNavigationBar">true</bool>
+
+    <!-- The Mali-T830 MC1 cannot afford the stretch shader: this selects the
+         uniform scale overscroll stretch (isHighEndGfx false) -->
+    <bool name="config_avoidGfxAccel">true</bool>
+
+    <!-- GPS: Broadcom LTO assistance data, requested by the HAL as PSDS -->
+    <string-array name="config_gnssParameters" translatable="false">
+        <item>LONGTERM_PSDS_SERVER_1=https://glltos1.glpals.com/7day/v3/latest/lto2.dat</item>
+        <item>LONGTERM_PSDS_SERVER_2=https://glltos2.glpals.com/7day/v3/latest/lto2.dat</item>
+    </string-array>
+</resources>
