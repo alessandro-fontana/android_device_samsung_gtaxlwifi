@@ -1,0 +1,23 @@
+#
+# SPDX-FileCopyrightText: 2026 The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# root: the misc node is 0600 root, as for AOSP's misc_writer
+service vendor.gtaxl-entropy-seed-clear /vendor/bin/gtaxl-entropy-seed.sh clear
+    user root
+    group root
+    oneshot
+    disabled
+
+service vendor.gtaxl-entropy-seed-write /vendor/bin/gtaxl-entropy-seed.sh write
+    user root
+    group root
+    oneshot
+    disabled
+
+on post-fs
+    start vendor.gtaxl-entropy-seed-clear
+
+on property:sys.boot_completed=1
+    start vendor.gtaxl-entropy-seed-write

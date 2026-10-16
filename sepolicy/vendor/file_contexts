@@ -6,6 +6,9 @@
 /dev/block/by-name/misc       u:object_r:misc_block_device:s0
 /dev/block/by-name/super      u:object_r:super_block_device:s0
 
+# Entropy seed
+/vendor/bin/gtaxl-entropy-seed\.sh   u:object_r:vendor_misc_writer_exec:s0
+
 # Touch HAL
 /vendor/bin/hw/vendor\.lineage\.touch-service\.gtaxlwifi   u:object_r:hal_lineage_touch_default_exec:s0
 
