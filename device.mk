@@ -158,6 +158,10 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/gps/gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gps.xml \
     $(DEVICE_PATH)/rootdir/etc/init/gps.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gps.rc
 
+# Sensors: only the IIO backend; the default list adds the input backend
+# and mock gyroscope, magnetometer and proximity sensors
+$(call soong_config_set,sensors_hal_mainline,load_custom_backends,iio)
+
 # Bluetooth: the QCA9377 answers APCF READ_EXTENDED_FEATURES with the bare
 # OCF and the stack aborts. Basic APCF works.
 PRODUCT_VENDOR_PROPERTIES += \

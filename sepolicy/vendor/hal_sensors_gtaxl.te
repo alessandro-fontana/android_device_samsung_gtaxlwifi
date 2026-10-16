@@ -1,0 +1,10 @@
+# The mainline sensors HAL lists /sys/bus/iio/devices and follows the links
+# to the IIO devices, labelled vendor_sysfs_iio
+allow hal_sensors_default sysfs:dir r_dir_perms;
+allow hal_sensors_default sysfs:lnk_file read;
+
+# Discovery reads that fail harmlessly: the device tree name and compatible
+# of the sensors and the modalias of their parents, for the sensor hwdb, the
+# SoC ADC, an IIO device that is no sensor, and hrtimer triggers in configfs
+dontaudit hal_sensors_default sysfs:file r_file_perms;
+dontaudit hal_sensors_default configfs:dir search;
