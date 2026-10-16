@@ -44,6 +44,37 @@ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 # VINTF
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/configs/vintf/manifest.xml
 
+# Kernel command line, which the loader takes from the payload: S-BOOT
+# passes only its own. The state is orange as on any unlocked device, which
+# also lets the recovery start adbd; S-BOOT does not report one. fbdev
+# emulation off keeps the S-BOOT logo up until the boot animation.
+BOARD_KERNEL_CMDLINE := \
+    $(MAINLINE_COMMON_ANDROIDBOOT_PARAMS) \
+    $(MAINLINE_COMMON_KERNEL_PARAMS) \
+    androidboot.boot_devices=soc@0/13540000.mmc \
+    androidboot.hardware=gtaxlwifi \
+    androidboot.verifiedbootstate=orange \
+    console=ttynull \
+    drm_kms_helper.fbdev_emulation=0 \
+    fbcon=rotate:1 \
+    panic=10 \
+    s3c2410_wdt.tmr_atboot=1
+# The late SM5502 reset that redetects the cable briefly opens the USB
+# switch: in the recovery it would drop the sideload connection.
+GTAXL_RECOVERY_CMDLINE := \
+    $(BOARD_KERNEL_CMDLINE) \
+    extcon_sm5502.boot_redetect=0
+
+# Boot: S-BOOT starts BOOT (p9, 32 MiB) or RECOVERY (p10); both hold
+# the loader (external/gtaxl-loader) with the kernel, DTB, ramdisk and
+# cmdline.
+# The recovery size is not the real one (38 MiB, checked by gtaxl_bootimg.py):
+# add_img_to_target_files also builds an unused recovery-two-step.img that
+# must fit.
+BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 134217728
+BOARD_CUSTOM_BOOTIMG := true
+BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/bootimg/mkbootimg.mk
 # Cache: the CACHE partition (p20), for /cache/recovery. cache.img is not
 # installed.
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
