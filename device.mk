@@ -113,6 +113,10 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/audio/audio.gtaxlwifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio.gtaxlwifi.xml \
     $(DEVICE_PATH)/configs/audio/primary_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/primary_audio_policy_configuration.xml
 
+# Doze: no AOD
+PRODUCT_PACKAGES += \
+    GtaxlNoAodOverlay
+
 # Wi-Fi PNO with the screen off
 PRODUCT_PACKAGES += \
     GtaxlWifiOverlay

@@ -26,6 +26,15 @@ prebuilt_etc {
     vendor: true,
 }
 
+// Doze: no always-on display
+runtime_resource_overlay {
+    name: "GtaxlNoAodOverlay",
+    resource_dirs: ["rro/GtaxlNoAodOverlay/res"],
+    manifest: "rro/GtaxlNoAodOverlay/AndroidManifest.xml",
+    vendor: true,
+    overrides: ["AodDefaultOnOverlay"],
+}
+
 // Wi-Fi: PNO with the screen off
 runtime_resource_overlay {
     name: "GtaxlWifiOverlay",
