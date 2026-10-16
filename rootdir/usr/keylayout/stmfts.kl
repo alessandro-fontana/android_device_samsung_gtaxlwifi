@@ -1,0 +1,5 @@
+# stmfts capacitive keys: the driver's KEY_BACK is the left (recents)
+# key and KEY_MENU the right (back) key on this panel
+
+key 158   APP_SWITCH
+key 139   BACK
