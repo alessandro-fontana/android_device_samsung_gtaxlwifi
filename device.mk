@@ -42,6 +42,12 @@ PRODUCT_CHARACTERISTICS := tablet
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/init/ueventd.gtaxlwifi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.gtaxlwifi.rc
 
+# Recovery: a larger /tmp for the addon backup, and an in-RAM misc (the
+# factory partition table has none)
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/rootdir/etc/init/gtaxl-recovery.rc:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/init/gtaxl-recovery.rc \
+    $(DEVICE_PATH)/rootdir/etc/gtaxl-misc.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/gtaxl-misc.sh
+
 # APEX compression: super is too small for uncompressed APEXes. It is the
 # default today, but RELEASE_APEX_MOUNT_BEFORE_DATA would turn it off.
 OVERRIDE_PRODUCT_COMPRESSED_APEX := true
