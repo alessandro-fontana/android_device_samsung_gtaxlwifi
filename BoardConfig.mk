@@ -48,6 +48,10 @@ TARGET_AUTO_COLLECT_KERNEL_MODULE_DEPS := true
 # Platform
 TARGET_BOARD_PLATFORM := exynos7870
 
+# Properties
+TARGET_VENDOR_PROP += \
+    $(DEVICE_PATH)/configs/properties/vendor_bluetooth.prop
+
 # SELinux
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private

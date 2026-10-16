@@ -122,6 +122,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_VENDOR_PROPERTIES += \
     wifi.direct.interface=p2p-dev-wlan0
 
+# Bluetooth: the QCA9377 answers APCF READ_EXTENDED_FEATURES with the bare
+# OCF and the stack aborts. Basic APCF works.
+PRODUCT_VENDOR_PROPERTIES += \
+    bluetooth.le.disable_apcf_extended_features=1
+
 # APEX compression: super is too small for uncompressed APEXes. It is the
 # default today, but RELEASE_APEX_MOUNT_BEFORE_DATA would turn it off.
 OVERRIDE_PRODUCT_COMPRESSED_APEX := true
