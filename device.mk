@@ -19,6 +19,10 @@ TARGET_POWER_HAL := perfmgr-lineage
 TARGET_THERMAL_HAL := linaro-libpm
 # The Wi-Fi variant has no vibration motor
 TARGET_HAS_VIBRATOR := false
+# Suspend is s2idle only. Wi-Fi reconnects on resume: no WoWLAN, the SDIO
+# firmware hangs on the first wake delivery.
+TARGET_SUPPORTS_SUSPEND := true
+
 include device/mainline/common/optional/options.mk
 $(call inherit-product, device/mainline/common/mainline_common.mk)
 
