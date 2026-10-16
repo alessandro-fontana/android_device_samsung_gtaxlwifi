@@ -35,6 +35,10 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.soc.manufacturer=samsung \
     ro.soc.model=exynos7870
 
+# Charging control: with charging inhibited the buck stays on and the tablet
+# runs from the charger (bypass).
+PRODUCT_PACKAGES += \
+    vendor.lineage.health-service.default
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.flash-autofocus.prebuilt.xml \

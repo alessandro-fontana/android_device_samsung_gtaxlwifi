@@ -63,6 +63,12 @@ DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/configs/vintf/manifest.xml
 # also on different channels. P2P is wpa_supplicant's P2P_DEVICE.
 WIFI_HAL_INTERFACE_COMBINATIONS := {{{STA}, 1}, {{AP}, 1}, {{P2P}, 1}}
 
+# Charging control: charging_enabled mirrors charge_behaviour, whose
+# "[auto] inhibit-charge" format the HAL cannot parse.
+$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/power_supply/sm5703-charger/charging_enabled)
+$(call soong_config_set,lineage_health,charging_control_charging_enabled,1)
+$(call soong_config_set,lineage_health,charging_control_charging_disabled,0)
+
 # Kernel command line, which the loader takes from the payload: S-BOOT
 # passes only its own. The state is orange as on any unlocked device, which
 # also lets the recovery start adbd; S-BOOT does not report one. fbdev
