@@ -16,3 +16,6 @@ genfscon sysfs /devices/platform/soc@0/14420000.csis u:object_r:sysfs_media_gtax
 genfscon sysfs /devices/platform/soc@0/138c0000.i2c u:object_r:sysfs_media_gtaxl:s0
 genfscon sysfs /devices/platform/soc@0/138a0000.i2c u:object_r:sysfs_media_gtaxl:s0
 genfscon sysfs /devices/platform/soc@0/138b0000.i2c u:object_r:sysfs_media_gtaxl:s0
+
+# GPS
+genfscon sysfs /devices/platform/gps/rfkill u:object_r:sysfs_gps:s0

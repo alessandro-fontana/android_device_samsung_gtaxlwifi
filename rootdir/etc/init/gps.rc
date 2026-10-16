@@ -1,0 +1,27 @@
+#
+# SPDX-FileCopyrightText: 2026 The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+# BCM4752 GPS driven by gpsd (Broadcom glgps).
+#
+# The rfkill link must exist before gpsd starts (hal class), hence exec_start
+# in post-fs-data. gpsd writes the rfkill state, which requires CAP_NET_ADMIN.
+
+on post-fs-data
+    mkdir /data/vendor/gps 0771 system system
+    exec_start vendor.gps-rfkill
+
+service vendor.gps-rfkill /vendor/bin/gtaxl-gps-rfkill.sh
+    user gps
+    group system
+    # /dev/kmsg is root-only: init opens it for the script
+    stdio_to_kmsg
+    oneshot
+    disabled
+
+service vendor.gpsd /vendor/bin/hw/gpsd -c /vendor/etc/gps.xml
+    class hal
+    user gps
+    group system inet wakelock
+    capabilities NET_ADMIN
+    ioprio be 0
