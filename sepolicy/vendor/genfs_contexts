@@ -1,0 +1,7 @@
+# Display and GPU
+genfscon sysfs /devices/platform/soc@0/14800000.dsi/14800000.dsi.0/backlight u:object_r:vendor_sysfs_backlight:s0
+genfscon sysfs /devices/platform/exynos-drm u:object_r:sysfs_gpu:s0
+genfscon sysfs /devices/platform/soc@0/11400000.gpu u:object_r:sysfs_gpu:s0
+
+# USB
+genfscon sysfs /devices/platform/soc@0/soc@0:usb@13600000/13600000.usb/udc u:object_r:sysfs_udc:s0
