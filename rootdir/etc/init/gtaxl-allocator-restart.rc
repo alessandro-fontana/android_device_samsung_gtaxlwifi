@@ -1,0 +1,9 @@
+#
+# SPDX-FileCopyrightText: 2026 The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+# Clients of a restarted graphics allocator stay bound to the dead binder;
+# the allocator's .rc only restarts surfaceflinger.
+on property:init.svc.vendor.graphics.allocator.minigbm_upstream=restarting
+    restart android-hardware-media-c2-v4l2-hal
+    restart vendor.camera.provider-libcamera

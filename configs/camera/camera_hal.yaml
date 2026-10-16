@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: CC0-1.0
+#
+# Camera ids are device tree node paths. Orientation and rotation declared
+# in the DTS take precedence and must match these.
+
+cameras:
+  "/base/soc@0/i2c@138c0000/camera@30":
+    location: front
+    rotation: 270
+  "/base/soc@0/i2c@138a0000/camera@37":
+    location: back
+    rotation: 90
+    flash: white:flash
+    # Strobe (1200 mA) over torch (150 mA) current, used to scale the
+    # pre-flash exposure for the shot.
+    flash_gain: 8
+    # Binned mode minus the debayer borders; larger sizes are JPEG only
+    max_stream_size: [1632, 1228]
