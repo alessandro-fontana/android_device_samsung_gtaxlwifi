@@ -1,0 +1,11 @@
+# Unset properties without a context (persist.device_config.*)
+dontaudit hal_graphics_allocator_default default_prop:file { getattr open read map };
+
+# Mesa looks up each option also as mesa.*, which has no context
+dontaudit { hal_graphics_composer_default hal_camera_default } default_prop:file { getattr open read map };
+
+# The minigbm mapper reads its optional vendor.minigbm.* settings in-process
+dontaudit cameraserver vendor_minigbm_prop:file { getattr open read map };
+
+# The vendor.minigbm.* options are device settings in vendor/build.prop
+set_prop(vendor_init, vendor_minigbm_prop)

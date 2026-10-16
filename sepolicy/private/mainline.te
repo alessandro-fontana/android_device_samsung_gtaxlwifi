@@ -1,0 +1,25 @@
+# Accesses that fail harmlessly with a mainline kernel, and platform gaps
+
+# Unset vendor properties without a context
+dontaudit audioserver vendor_default_prop:file { getattr open read map };
+
+# kdevtmpfs works on its own devtmpfs, which is not mounted: /dev is a tmpfs
+dontaudit kernel device:dir { write add_name remove_name };
+dontaudit kernel device:blk_file { create setattr unlink };
+
+# storaged has no sysfs access in AOSP
+dontaudit storaged sysfs:file r_file_perms;
+
+# fsck of a microSD lists its sysfs block directory: AOSP already ignores
+# the files (fsck_untrusted.te), not the directories
+dontaudit fsck_untrusted sysfs:dir r_dir_perms;
+
+# init.rc writes tracing and mmc debugfs nodes, and discard_max_bytes, which
+# is generic sysfs that a neverallow keeps from init
+dontaudit init debugfs_bootreceiver_tracing:dir { write add_name };
+dontaudit init debugfs_mmc:file setattr;
+dontaudit init sysfs:file { open write };
+
+# usbd waits for the USB gadget HAL; without binder_use, servicemanager
+# cannot notify it and USB stays unconfigured when the HAL starts later
+binder_use(usbd)

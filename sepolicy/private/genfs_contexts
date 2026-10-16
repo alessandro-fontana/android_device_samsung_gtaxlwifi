@@ -1,0 +1,2 @@
+# firmware_config is written by vendor_init (dlkm_loader_mainline.rc)
+genfscon proc /sys/kernel/firmware_config u:object_r:proc_firmware_config:s0
