@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SPDX-FileCopyrightText: 2026 The LineageOS Project
+    SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- ath10k supports scheduled scan through the firmware NLO -->
+    <bool name="config_wifi_background_scan_support">true</bool>
+    <bool name="config_wifi5ghzSupport">true</bool>
+
+    <!-- No MAC randomization in the firmware for connected, P2P and AP
+         interfaces; open networks still get a non-persistent one -->
+    <bool name="config_wifi_connected_mac_randomization_supported">false</bool>
+    <bool name="config_wifi_p2p_mac_randomization_supported">false</bool>
+    <bool name="config_wifi_ap_mac_randomization_supported">false</bool>
+    <bool name="config_wifiAllowNonPersistentMacRandomizationOnOpenSsids">true</bool>
+</resources>

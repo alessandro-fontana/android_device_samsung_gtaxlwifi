@@ -55,6 +55,10 @@ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 # VINTF
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/configs/vintf/manifest.xml
 
+# Wi-Fi: ath10k with the QCA9377 firmware allows STA and AP concurrently,
+# also on different channels. P2P is wpa_supplicant's P2P_DEVICE.
+WIFI_HAL_INTERFACE_COMBINATIONS := {{{STA}, 1}, {{AP}, 1}, {{P2P}, 1}}
+
 # Kernel command line, which the loader takes from the payload: S-BOOT
 # passes only its own. The state is orange as on any unlocked device, which
 # also lets the recovery start adbd; S-BOOT does not report one. fbdev

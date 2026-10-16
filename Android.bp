@@ -19,6 +19,14 @@ prebuilt_etc {
     vendor: true,
 }
 
+// Wi-Fi: PNO with the screen off
+runtime_resource_overlay {
+    name: "GtaxlWifiOverlay",
+    resource_dirs: ["rro/GtaxlWifiOverlay/res"],
+    manifest: "rro/GtaxlWifiOverlay/AndroidManifest.xml",
+    vendor: true,
+}
+
 // Camera tuning: libcamera looks for <sensor>.yaml before uncalibrated.yaml
 prebuilt_etc {
     name: "libcamera_ipa_simple_s5k4h5yc.yaml",
