@@ -1,0 +1,18 @@
+#
+# SPDX-FileCopyrightText: 2026 The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+import /vendor/etc/init/hw/init.mainline.rc
+
+# Display: the console stops drawing once Android owns the display
+on property:sys.boot_completed=1
+    write /sys/class/vtconsole/vtcon0/bind 0
+    write /sys/class/vtconsole/vtcon1/bind 0
+
+# Mount
+on fs
+    mount_all --early
+
+on late-fs
+    mount_all --late

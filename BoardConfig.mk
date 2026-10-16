@@ -34,6 +34,11 @@ $(call soong_config_set,minigbm_upstream,platform,all_arm)
 include $(DEVICE_PATH)/kernels/exynos7870/board.mk
 BOARD_RAMDISK_USE_LZ4 := true
 
+# Kernel modules: the eMMC and dm drivers are built in, and ueventd loads
+# the rest by modalias. cfg80211 is loaded by the first stage, before the
+# policy: it creates the keyring for the regulatory.db signature.
+BOOT_KERNEL_MODULES := cfg80211.ko
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := cfg80211.ko
 # Platform
 TARGET_BOARD_PLATFORM := exynos7870
 
