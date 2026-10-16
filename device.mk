@@ -119,6 +119,10 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.gtaxlwifi \
     charger_res_images_vendor
 
+# Charging mode: with RGB565 minui's gr_clear() overruns the mapping
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.minui.pixel_format=BGRX_8888
+
 # Wi-Fi
 PRODUCT_PACKAGES += \
     android.hardware.wifi-service \
