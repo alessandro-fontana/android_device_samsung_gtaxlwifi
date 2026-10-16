@@ -35,6 +35,12 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.soc.manufacturer=samsung \
     ro.soc.model=exynos7870
 
+# Thermal: every entry in thermal.json must be Optional (a missing mandatory
+# one blocks system_server at boot) and use the netlink zone name, truncated
+# to 19 characters (devfreq-11400000.gp).
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/thermal/thermal.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal.json
+
 # Charging control: with charging inhibited the buck stays on and the tablet
 # runs from the charger (bypass).
 PRODUCT_PACKAGES += \
