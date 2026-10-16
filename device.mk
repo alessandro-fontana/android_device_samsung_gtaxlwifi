@@ -94,3 +94,7 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Storage
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
+# OTA: extracted by the updater to /tmp/install
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/ota/gtaxl-ota.sh:install/bin/gtaxl-ota.sh
