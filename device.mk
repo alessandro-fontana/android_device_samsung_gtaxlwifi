@@ -113,6 +113,12 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/init/gtaxl-recovery.rc:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/init/gtaxl-recovery.rc \
     $(DEVICE_PATH)/rootdir/etc/gtaxl-misc.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/gtaxl-misc.sh
 
+# Health: filters spurious cable unplugs in charging mode
+PRODUCT_PACKAGES += \
+    android.hardware.health-service.example_recovery \
+    android.hardware.health-service.gtaxlwifi \
+    charger_res_images_vendor
+
 # Wi-Fi
 PRODUCT_PACKAGES += \
     android.hardware.wifi-service \
